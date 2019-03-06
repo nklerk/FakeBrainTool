@@ -1,0 +1,14 @@
+{
+  "name": "fakebraintool",
+  "version": "1.0.0",
+  "description": "Fake bain tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Niels de Klerk",
+  "license": "ISC",
+  "dependencies": {
+    "dns-js": "^0.2.1"
+  }
+}

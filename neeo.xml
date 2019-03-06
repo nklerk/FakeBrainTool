@@ -1,0 +1,17 @@
+<fw xv="1">
+<v>0.53.8</v>
+<f>
+/1c5e991f04ecf55708298be91907df8894a0c38c/neeo_release.bin
+</f>
+<crc>0x1e6eea06</crc>
+<r>
+/1c5e991f04ecf55708298be91907df8894a0c38c/recovery_release.bin
+</r>
+<rcrc>0xf78e7c6a</rcrc>
+<b>
+/1c5e991f04ecf55708298be91907df8894a0c38c/bootloader_release.bin
+</b>
+<bcrc>0x4aa8d510</bcrc>
+<rec/>
+<git/>
+</fw>

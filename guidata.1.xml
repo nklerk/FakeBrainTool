@@ -1,0 +1,18 @@
+<update>
+    <version tr2version="0.53.8" projectId="1549799673552.7197" brainHostname="neeo-a7277f35"/>
+    <element key="6332151984648355840_title">
+Vette muziek title
+    </element>
+    <element key="6332151984648355840_artist">Little DinoJaY</element>
+    <element key="6332151984648355840_cover_small" type="image">
+v1/imagecache/getlazyresized/lz4-black/80/80/http%3A%2F%2F10.2.1.30%3A1400%2Fgetaa%3Fs%3D1%26u%3Dx-sonos-http%253alibrarytrack%25253ai.8WdG64vCRvYXZ7.mp4%253fsid%253d204%2526flags%253d8224%2526sn%253d1
+    </element>
+    <element key="6332151984648355840_cover" type="image">
+v1/imagecache/getlazyresized/lz4-black/480/480/http%3A%2F%2F10.2.1.30%3A1400%2Fgetaa%3Fs%3D1%26u%3Dx-sonos-http%253alibrarytrack%25253ai.8WdG64vCRvYXZ7.mp4%253fsid%253d204%2526flags%253d8224%2526sn%253d1
+    </element>
+    <element key="6332151984648355840_nextcover" type="image">
+v1/imagecache/getlazyresized/lz4-black/480/480/http%3A%2F%2F10.2.1.30%3A1400%2Fgetaa%3Fs%3D1%26u%3Dx-sonos-http%253alibrarytrack%25253ai.MoxqJEgSkqgZRp.mp4%253fsid%253d204%2526flags%253d8224%2526sn%253d1
+    </element>
+    <element key="6332151984648355840_playing">true</element>
+    <screenContent id="active"/>
+</update>

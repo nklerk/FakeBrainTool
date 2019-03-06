@@ -1,0 +1,523 @@
+<doc>
+    <keypadMapping>
+        <key id="MUTE" code="#0004"></key>
+        <key id="HOME" code="#0002"></key>
+        <key id="POWER" code="#0001" longPressDelay="2000"></key>
+        <key id="VOLUP" code="#0020" longPressDelay="400" repeat="80"></key>
+        <key id="VOLDOWN" code="#2000" longPressDelay="400" repeat="80"></key>
+        <key id="BACK" code="#0010"></key>
+        <key id="CHUP" code="#0008" repeat="80"></key>
+        <key id="CHDOWN" code="#0800" repeat="80"></key>
+        <key id="LEFT" code="#0200" repeat="80"></key>
+        <key id="RIGHT" code="#0080" repeat="80"></key>
+        <key id="UP" code="#0040" repeat="80"></key>
+        <key id="DOWN" code="#0400" repeat="80"></key>
+        <key id="OK" code="#0100"></key>
+        <key id="MENU" code="#1000"></key>
+    </keypadMapping>
+
+    <header height="30" backgroundColor="#FF000000">
+        <image id="Charging" contentId="chargingicon.png" x="7" y="6" hidden="[[tr2.not_charging]]"/>
+        <image id="Battery" contentId="batteryicon_set.png" x="19" y="7" activeFrame="[[tr2.battery_state]]" />
+        <textView id="BatteryText" font="small" alignment="Left" x="64" y="5" width="60" height="20" textColor="#FFFEFEFE" text="[[tr2.battery_percentage]]"/>
+        <image id="Download" contentId="download.png" x="368" y="8" animationTime="800" hidden="[[tr2.fw_dl_hidden]]" />
+        <image id="6Low" contentId="6lowpanIcon.png" x="392" y="6" hidden="[[tr2.6lowpan_icon_hidden]]" activeFrame="[[tr2.6lowpan_rssi_state]]" />
+        <image id="Wifi" contentId="wifiIcon.png" x="439" y="6" hidden="[[tr2.wifi_icon_hidden]]" activeFrame="[[tr2.wifi_rssi_state]]" />
+    </header>
+
+    <guiConfig volumePopupTimeout="2000" touchRegionModificator="15" dotColor="#B0AFAFAF" dotActiveColor="#B0FFFFFF" dotDistance="20" dotRadius="6" dotYPos="780" listDampingFactor="400" listAccelerationFactor="0.55" startScreenId="6332151776837369856" backgroundGradientColorTop="#FFAAAAAA" backgroundGradientColorBottom="#FFFFFFFF"/>
+
+    <appConfig projectId="1549993132494" powerSaveTimeout="30" neeolink="false"/>
+
+    <font-styles>
+        <font-style name="small" file="fontlight.ttf" size="16"/>
+        <font-style name="normal" file="fontbold.ttf" size="23"/>
+        <font-style name="normallight" file="fontlight.ttf" size="23"/>
+        <font-style name="large" file="fontbold.ttf" size="32"/>
+        <font-style name="largelight" file="fontlight.ttf" size="32"/>
+        <font-style name="xlargelight" file="fontlight.ttf" size="54"/>
+        <font-style name="symbol" file="streamline-app-selection.ttf" size="58"/>
+        <font-style name="smallsymbol" file="streamline-app-selection.ttf" size="30"/>
+    </font-styles>
+
+    <popupStyle id="upgradeBrainVersionCheck" x="0" y="0" height="800" width="480" backgroundColor="#FFFEFEFE">
+        <textView font="largelight" alignment="Center" x="0" y="80" width="480" height="40" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="NEEO Firmware Upgrade"/>
+        <textView font="normal" alignment="Center" x="0" y="170" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="Current version is"/>
+        <textView font="normal" alignment="Center" x="0" y="200" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="0.53.8-20180424-05eb8e2-0201-092014"/>
+        <textView font="normal" alignment="Center" x="0" y="260" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="New version is"/>
+        <textView font="normal" alignment="Center" x="0" y="290" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="unknown"/>
+        <textView font="normal" alignment="Center" x="0" y="440" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="This will upgrade your NEEO"/>
+        <textView font="normal" alignment="Center" x="0" y="470" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="Brain first and then your"/>
+        <textView font="normal" alignment="Center" x="0" y="500" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="NEEO Remote."/>
+        <button font="large" x="77" y="600" height="70" width="330" edgeRadius="8" onClick="ShowPopup('upgradeBrainConfirm')" backgroundColor="#FF00B4FF" activeBackgroundColor="#FF1983B0" text="Upgrade" activeTextColor="#FF010101"/>
+        <button font="large" x="77" y="690" height="70" width="330" edgeRadius="8" onClick="HidePopup()" backgroundColor="#FF00B4FF" activeBackgroundColor="#FF1983B0" text="Maybe Later" activeTextColor="#FF010101"/>
+    </popupStyle>
+
+    <popupStyle id="upgradeBrainConfirm" x="0" y="0" height="800" width="480" backgroundColor="#FFFEFEFE">
+        <textView font="largelight" alignment="Center" x="0" y="80" width="480" height="40" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="NEEO Firmware Upgrade"/>
+        <textView font="normal" alignment="Center" x="0" y="355" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="By installing this firmware you"/>
+        <textView font="normal" alignment="Center" x="0" y="385" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="agree to NEEO's terms &#38; conditions"/>
+        <textView font="normal" alignment="Center" x="0" y="415" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="www.neeo.com/legal"/>
+        <textView font="normal" alignment="Center" x="0" y="500" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="The upgrade will take around 15 minutes."/>
+        <button font="large" x="77" y="600" height="70" width="330" edgeRadius="8" onClick="TriggerAction('0');StartBrainUpgrade()" backgroundColor="#FF00B4FF" activeBackgroundColor="#FF1983B0" text="Sure let's do this" activeTextColor="#FF010101"/>
+        <button font="large" x="77" y="690" height="70" width="330" edgeRadius="8" onClick="HidePopup();HidePopup()" backgroundColor="#FF00B4FF" activeBackgroundColor="#FF1983B0" text="Maybe Later" activeTextColor="#FF010101"/>
+    </popupStyle>
+
+    <popupStyle id="BrainUpgrading" x="0" y="0" height="800" width="480" backgroundColor="#FFFEFEFE">
+        <image x="147" y="200" contentId="bootlogo.png" placeholderText="NEEOLOGO" backgroundColor="#FFFEFEFE"/>
+        <textView font="normal" alignment="Center" x="50" y="270" width="380" height="40" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="NEEO Brain upgrading..."/>
+        <textView font="normal" alignment="Center" x="40" y="390" width="400" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="[[tr2.BrainUpgradeInfo1]]"/>
+        <textView font="normal" alignment="Center" x="40" y="420" width="400" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="[[tr2.BrainUpgradeInfo2]]"/>
+        <textView font="normal" alignment="Center" x="40" y="450" width="400" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="[[tr2.BrainUpgradeInfo3]]"/>
+        <progressBar id="UpgradeProgress" progressBarColor="#FF010101" backgroundColor="#FFFEFEFE" frameColor="#FF010101" x="15" y="600" height="10" width="450" value="[[tr2.BrainUpgradeProgress]]"/>
+    </popupStyle>
+
+    <popupStyle id="upgradeBrainFailed" x="0" y="0" height="800" width="480" backgroundColor="#FFFEFEFE">
+        <image x="147" y="50" contentId="bootlogo.png" placeholderText="NEEOLOGO" backgroundColor="#FFFEFEFE"/>
+        <button y="140" x="190" width="100" height="100" frameColor="#FFFEFEFE" font="normal" text="" textColor="#FF010101" activeTextColor="#FF010101" icoFont="symbol" icoChar="#e03f" icoColor="#FF010101" activeIcoColor="#FF010101"/>
+        <textView font="normal" alignment="Center" x="0" y="250" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="There was an error during the"/>
+        <textView font="normal" alignment="Center" x="0" y="280" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="firmware upgrade."/>
+        <textView font="normal" alignment="Center" x="0" y="340" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="Your NEEO Brain is restored and"/>
+        <textView font="normal" alignment="Center" x="0" y="370" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="will download a fresh copy of the"/>
+        <textView font="normal" alignment="Center" x="0" y="400" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="firmware."/>
+        <textView font="normal" alignment="Center" x="0" y="460" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="You'll be notified when it is ready"/>
+        <textView font="normal" alignment="Center" x="0" y="490" width="480" height="25" textColor="#FF010101" backgroundColor="#FFFEFEFE" text="for upgrade."/>
+        <button font="large" x="77" y="690" height="70" width="330" edgeRadius="8" onClick="HidePopup()" backgroundColor="#FF00B4FF" activeBackgroundColor="#FF1983B0" text="CLOSE" activeTextColor="#FF010101"/>
+    </popupStyle>
+
+    <popupStyle id="UpgradeConfirm" x="0" y="250" height="250" width="480" backgroundColor="#FF010101" locked="true">
+        <message font="normal" alignment="Center" x="10" y="0" width="460" height="130" backgroundColor="#00000000" textColor="#FFFEFEFE" text="New version available (%s)!" />
+        <button x="0" y="130" height="120" width="480" text="Install Now!" onClick="UpgradeConfirm(1)" backgroundColor="#FF333333" textColor="#FF010101" font="normal" activeTextColor="#FF404040"/>
+    </popupStyle>
+
+    <popupStyle id="message" x="20" y="250" height="250" width="440" backgroundColor="#F2FFFFFF" edgeRadius="15">
+        <message font="normal" alignment="Center" x="10" y="0" width="420" height="130" backgroundColor="#00000000" textColor="#FFFEFEFE"></message>
+        <graphicElement type="HLine" x="0" y="147" width="440" elementColor="#F2BBBBBB"/>
+        <button x="0" y="148" height="102" width="440" alignment="Center" edgeRadius="0 15" onClick="HidePopup()" text="CLOSE" backgroundColor="#F2FFFFFF" textColor="#FF00A2E6" font="large" activeBackgroundColor="#F2EEEEEE"/>
+    </popupStyle>
+
+    <popupStyle id="blocking" x="20" y="250" height="250" width="440" backgroundColor="#FF010101" edgeRadius="15">
+        <message font="normal" alignment="Center" x="10" y="0" width="420" height="250" backgroundColor="#00000000" textColor="#FFFEFEFE"></message>
+    </popupStyle>
+
+    <popupStyle id="PowerOffConfirm" x="0" y="0" height="800" width="480" backgroundColor="#FFFEFEFE" locked="true">
+        <button x="180" y="185" height="140" width="120" onClick="PowerOff(0)" icoFont="symbol" icoChar="#e028" icoColor="#FF010101" activeIcoColor="#FF555555" backgroundColor="#FFFEFEFE" font="normal" alignment="Center" textColor="#FF010101" activeTextColor="#FF555555" text="Power off"/>
+        <button x="180" y="358" height="140" width="120" onClick="PowerOff(1)" icoFont="symbol" icoChar="#e02b" icoColor="#FF010101" activeIcoColor="#FF555555" backgroundColor="#FFFEFEFE" font="normal" alignment="Center" textColor="#FF010101" activeTextColor="#FF555555" text="Restart"/>
+        <button x="180" y="538" height="140" width="120" onClick="HidePopup()" icoFont="symbol" icoChar="#e02a" icoColor="#FF010101" activeIcoColor="#FF555555" backgroundColor="#FFFEFEFE" font="normal" alignment="Center" textColor="#FF010101" activeTextColor="#FF555555" text="Cancel"/>
+    </popupStyle>
+
+    <popupStyle id="charging_screen" x="0" y="0" height="800" width="480" backgroundColor="#FFFEFEFE" locked="true">
+        <chargingIcon id="charging" foregroundColor="#FF00FF00" backgroundColor="#FFFEFEFE" x="83" y="315" height="150" width="300" animationNumber="2" />
+    </popupStyle>
+
+    <popupStyle id="messageOkReboot" x="20" y="250" height="250" width="440" backgroundColor="#F2FFFFFF" edgeRadius="15">
+        <message font="normal" alignment="Center" x="10" y="0" width="420" height="130" backgroundColor="#00000000" textColor="#FFFEFEFE"/>
+        <graphicElement type="HLine" x="0" y="147" width="440" elementColor="#F2BBBBBB"/>
+        <button x="0" y="148" height="102" width="440" alignment="Center" edgeRadius="0 15" onClick="PowerOff(1)" text="Restart" backgroundColor="#F2FFFFFF" textColor="#FF00A2E6" font="large" activeBackgroundColor="#F2EEEEEE"/>
+    </popupStyle>
+
+    <screen type="Custom" id="loading" onLoad="KeepAwake(1);ResetLoader()" onUnload="KeepAwake(0)">
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="HOME" onPress="" />
+        <textView x="0" y="60" width="480" height="40" font="normallight" alignment="Center" textColor="#FF010101" text="RUNNING RECIPE" hidden="[[hide_start_recipe]]"/>
+        <textView x="0" y="60" width="480" height="40" font="normallight" alignment="Center" textColor="#FF010101" text="POWER OFF RECIPE" hidden="[[hide_end_recipe]]"/>
+        <textView x="0" y="100" width="480" height="80" font="normallight" alignment="Center" textColor="#FF010101" text="[[loading_screen_recipe_name]]"/>
+        <loader id="loadingProgress" x="0" y="200" hidden="true">
+            <textView id="text1" x="50" y="185" height="30" width="380" alignment="Center" font="normal" textColor="#FF010101" text="[[loading_screen_text]]"/>
+        </loader>
+    </screen>
+
+    <screen type="Custom" id="0">
+        <key id="HOME" onLongPress="" />
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <header height="70">
+            <button x="380" y="0" height="70" width="100" onClick="ChangeScreen('settings',1)" icoFont="smallsymbol" icoChar="#e06d" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+        </header>
+        <screen id="active" type="Custom" x="0" y="0" width="480" height="250" layer="1"></screen>
+        <textView font="largelight" alignment="Center" x="0" y="300" width="480" height="40" textColor="#FF010101" icoColor="#FF010101" text="The future is bright"/>
+        <screen type="Custom" frameColor="#00000000" y="350" x="0" width="480" height="350">
+            <button x="170" y="125" width="140" height="100" onClick="ChangeScreen('6332151776837369856',1)" frameColor="#00000000" font="largelight" text="" textColor="#FF010101" activeTextColor="#FF404040" icoFont="symbol" icoChar="#e056" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+            <textView font="largelight" alignment="Center" x="0" y="170" width="480" height="40" textColor="#FF010101" icoColor="#FF010101" text="Don't use the trashcan!"/>
+        </screen>
+    </screen>
+
+    <screen type="Custom" id="settings">
+        <key id='HOME' onPress="ChangeScreen('6332151776837369856', -1)"/>
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <header height="70"/>
+        <button x="20" y="300" width="50" height="40" onClick="ChangeScreen('0',-1)" activeTextColor="#FF404040" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+        <button x="71" y="300" width="338" height="40" onClick="ChangeScreen('0',-1)" font="largelight" alignment="Center" activeTextColor="#FF404040" textColor="#FF010101" text="Settings"/>
+        <screen type="Custom" frameColor="#FF000000" y="350" x="0" width="480" height="350" backgroundColor="#30010101">
+            <button y="130" x="15" width="140" height="100" onClick="ReloadGUI()" frameColor="#00000000" font="normal" text="RELOAD" textColor="#FF010101" activeTextColor="#FF404040" icoFont="symbol" icoChar="#e069" icoColor="#FF010101" activeIcoColor="#FF404040" />
+            <button y="130" x="175" width="140" height="100" onClick="ShowPopup('message','No firmware upgrade available for your NEEO Brain and NEEO Remote.')" onLongPress="CheckForTr2Upgrade()" frameColor="#00000000" font="normal" text="UPGRADE" textColor="#FF010101" activeTextColor="#FF404040" icoFont="symbol" icoChar="#e099" icoColor="#FF010101" activeIcoColor="#FF404040" />
+            <button y="130" x="335" width="140" height="100" onClick="ChangeScreen('systeminfo',1)" frameColor="#00000000" font="normal" text="ABOUT" textColor="#FF010101" activeTextColor="#FF404040" icoFont="symbol" icoChar="#e03f" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </screen>
+    </screen>
+    <screen type="Custom" id="systeminfo" onLoad="TriggerAction('1')">
+        <key id='HOME' onPress="ChangeScreen('6332151776837369856', -1)"/>
+        <key id='BACK' onPress="ChangeScreen('settings', -1)"/>
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+
+        <header height="70">
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('settings',-1)" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+
+        <textView font="largelight" alignment="Center" x="0" y="50" width="480" height="40" textColor="#FF010101" icoColor="#FF010101" text="ABOUT"/>
+        <textView backgroundColor="#19ffffff" x="0" y="110" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="MODEL: "/>
+        <textView backgroundColor="#19ffffff" x="240" y="110" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="HOMEY REMOTE"/>
+        <textView backgroundColor="#0cffffff" x="0" y="150" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="REMOTE VERSION: "/>
+        <textView backgroundColor="#0cffffff" x="240" y="150" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="[[tr2.appversion]]"/>
+        <textView backgroundColor="#19ffffff" x="0" y="190" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="REMOTE SERIAL: "/>
+        <textView backgroundColor="#19ffffff" x="240" y="190" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="[[tr2.deviceserial]]"/>
+        <textView backgroundColor="#0cffffff" x="0" y="230" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="RADIO VERSION: "/>
+        <textView backgroundColor="#0cffffff" x="240" y="230" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="[[tr2.jn5168version]]"/>
+        <textView backgroundColor="#19ffffff" x="0" y="270" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="HOMEY VERSION: "/>
+        <textView backgroundColor="#19ffffff" x="240" y="270" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="Homey v2.0.2 290219"/>
+        <textView backgroundColor="#0cffffff" x="0" y="310" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="HOMEY HOSTNAME: "/>
+        <textView backgroundColor="#0cffffff" x="240" y="310" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="Homey-Pro"/>
+        <textView backgroundColor="#19ffffff" x="0" y="350" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="HOMEY LAN IP: "/>
+        <textView backgroundColor="#19ffffff" x="240" y="350" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="n/a"/>
+        <textView backgroundColor="#0cffffff" x="0" y="390" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="HOMEY WLAN IP: "/>
+        <textView backgroundColor="#0cffffff" x="240" y="390" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="10.2.1.8"/>
+        <textView backgroundColor="#19ffffff" x="0" y="430" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="REMOTE WLAN RSSI: "/>
+        <textView backgroundColor="#19ffffff" x="240" y="430" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="[[tr2.wifi_rssi]]"/>
+        <textView backgroundColor="#0cffffff" x="0" y="470" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="WIFI REGION: "/>
+        <textView backgroundColor="#0cffffff" x="240" y="470" height="40" width="240" alignment="Left" font="normal" textColor="#FF010101" text="EU"/>
+        <textView backgroundColor="#19ffffff" x="0" y="510" height="40" width="240" alignment="Right" font="normal" textColor="#FF010101" text="UPTIME: "/>
+        <guiClock backgroundColor="#19ffffff" x="240" y="510" height="40" width="240" alignment="Left" font="normal" foregroundColor="#FFFEFEFE" text="" clockType="uptime"/>
+        <button x="80" y="600" height="60" width="320" edgeRadius="7" onClick="ChangeScreen('regulatory',1)" font="normal" text="REGULATORY" textColor="#FF010101" backgroundColor="#33ffffff" activeTextColor="#FF010101" activeBackgroundColor="#33999999"/>
+    </screen>
+
+    <screen type="Custom" id="regulatory">
+        <key id='HOME' onPress="ChangeScreen('6332151776837369856', -1)"/>
+        <key id='BACK' onPress="ChangeScreen('systeminfo', -1)"/>
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <header height="70">
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('systeminfo',-1)" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FFFF3333" />
+        </header>
+        <screen id="grid0" type="Custom" frameColor="#FF010101" y="0" x="0" width="480" height="700">
+            <textView font="normal" alignment="Center" x="0" y="0 " width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="MODEL: 6336-REMOTE"/>
+            <textView font="large" alignment="Center" x="0" y="50" width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="U.S."/>
+            <textView font="normal" alignment="Center" x="0" y="90" width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="FCC ID: 2AKK7-RM633601"/>
+            <button backgroundColor="#00000000" x="190" y="130" height="70" width="100" onClick="" icoFont="symbol" icoChar="#e064" icoColor="#FF010101" activeIcoColor="#FF010101" />
+            <textView font="normal" alignment="Center" x="0" y="250 " width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="MODEL: 6336-REMOTE"/>
+            <textView font="large" alignment="Center" x="0" y="290" width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="CANADA"/>
+            <textView font="normal" alignment="Center" x="0" y="330" width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="IC: 22300-RM633601"/>
+            <textView font="normal" alignment="Center" x="0" y="370" width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="www.neeo.com/fcc-ic"/>
+            <textView font="large" alignment="Center" x="0" y="450" width="480" height="40" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="EUROPE"/>
+            <button x="135" y="490" height="70" width="100" onClick="" icoFont="symbol" icoChar="#e056" icoColor="#FF010101" activeIcoColor="#FF010101" backgroundColor="#00000000" />
+            <button x="240" y="490" height="70" width="100" onClick="" icoFont="symbol" icoChar="#e074" icoColor="#FF010101" activeIcoColor="#FF010101" backgroundColor="#00000000" />
+            <textView font="small" alignment="Center" x="0" y="580" width="480" height="20" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="This device complies with Part 15 of FCC Rules."/>
+            <textView font="small" alignment="Center" x="0" y="600" width="480" height="20" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="Operation is subject to the following two conditions:"/>
+            <textView font="small" alignment="Center" x="0" y="620" width="480" height="20" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="(1) this device may not cause harmful interference, and"/>
+            <textView font="small" alignment="Center" x="0" y="640" width="480" height="20" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="(2) this device must accept any interference received,"/>
+            <textView font="small" alignment="Center" x="0" y="660" width="480" height="20" backgroundColor="#00000000" textColor="#FF010101" icoColor="#FF010101" text="including interference that may cause undesired operation."/>
+        </screen>
+    </screen>
+
+    <screen type="Custom" id="6332151776837369856">
+        <key id='HOME' onPress="ChangeScreen('6332151776837369856', -1)"/>
+        <header height="70">
+            <button x="380" y="0" height="70" width="100" onClick="ChangeScreen('settings',1)" icoFont="smallsymbol" icoChar="#e06d" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+        </header>
+        <screen type="Clone" x="0" y="0" width="480" height="250" source="active"></screen>
+        <button x="20" y="300" width="50" height="40" onClick="ChangeScreen('0',-1)" activeTextColor="#FF404040" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+        <button x="71" y="300" width="338" height="40" onClick="ChangeScreen('0',-1)" font="largelight" alignment="Center" activeTextColor="#FF404040" textColor="#FF010101" text="Room"/>
+        <screen type="Custom" x="0" y="640" width="480" height="60" backgroundColor="#30010101">
+            <button y="5" x="5" width="150" height="50" onClick="ReloadGUI()" frameColor="#00000000" font="small" text="RELOAD" textColor="#FF010101" activeTextColor="#FF404040" backgroundColor="#60010101"/>
+            <button y="5" x="165" width="150" height="50" onClick="ChangeScreen('6422449637243748352',1)" onLongPress="CheckForTr2Upgrade()" frameColor="#00000000" font="small" text="LIGHTS" textColor="#FF010101" activeTextColor="#FF404040" backgroundColor="#60010101"/>
+            <button y="5" x="325" width="150" height="50" onClick="ChangeScreen('6422449637243748352',1)" frameColor="#00000000" font="small" text="ACTIVE (2)" textColor="#FF010101" activeTextColor="#FF404040" backgroundColor="#60010101"/>
+        </screen>
+        <screen type="Custom" x="0" y="350" width="480" height="290">
+            <button y="50" x="10" width="110" height="50" onClick="ActivateScenario('6332151984648355840','1x','SONOS','start')" frameColor="#00000000" font="small" text="SONOS" textColor="#FF010101" activeTextColor="#FF404040" icoFont="smallsymbol" icoChar="#e092" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+            <button y="50" x="125" width="110" height="50" onClick="ActivateScenario('6482149846550577152','1y','MOVIES &amp; MEDIA','start')" frameColor="#00000000" font="small" text="MOVIES &amp; MEDIA" textColor="#FF010101" activeTextColor="#FF404040" icoFont="smallsymbol" icoChar="#e07a" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+            <button y="50" x="240" width="110" height="50" onClick="ActivateScenario('6482150031175450624','1z','TV','start')" frameColor="#00000000" font="small" text="TV" textColor="#FF010101" activeTextColor="#FF404040" icoFont="smallsymbol" icoChar="#e00d" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+            <button y="50" x="355" width="110" height="50" onClick="ChangeScreen('6422449637243748352',1)" frameColor="#00000000" font="small" text="LIGHT" textColor="#FF010101" activeTextColor="#FF404040" icoFont="smallsymbol" icoChar="#e071" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+        </screen>
+    </screen>
+
+    <screen type="FastList" slideTolerance="strict" height="570" id="6332151984648355840" onLoad="BrowseDirectory('&#x2F;projects&#x2F;home&#x2F;tr2&#x2F;device&#x2F;6332151969876017152&#x2F;rootitems', 'eyJkaXJlY3RvcnlVcmwiOiIvcHJvamVjdHMvaG9tZS90cjIvZGV2aWNlLzYzMzIxNTE5Njk4NzYwMTcxNTIvcm9vdGl0ZW1zIiwiYnJvd3NlVXJpIjoiIiwidGl0bGUiOiJTT05PUyIsImhpc3RvcnkiOltdfQ==', 'ROOT')" onPullDown="ReloadList()" overscrollIcon="#e069" overscrollIconFont="symbol" overscrollIconColor="0xFFDBDBDB" splitLineColor="#FFEDEDED" overscrollEnabled="true" overscrollColor="#FF010101" overscrollBottomColor="#FFD3D3D3" overscrollHeight="100" loadingImage="loading" backgroundColor="#FF010101">
+        <key id="MUTE" onPress="TriggerAction('2')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1-','SONOS','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" />
+        <key id="RIGHT" />
+        <key id="UP" />
+        <key id="DOWN" />
+        <key id="VOLUP" onPress="TriggerAction('3')" onLongPressRepeat="TriggerAction('4')" />
+        <key id="VOLDOWN" onPress="TriggerAction('5')" onLongPressRepeat="TriggerAction('6')" />
+        <key id="CHUP" onPress="TriggerAction('7')" />
+        <key id="CHDOWN" onPress="TriggerAction('8')" />
+        <key id="BACK" onPress="ListBack('0',-1)" />
+        <key id="OK" onPress="TriggerAction('9')" />
+        <key id="MENU" />
+        <header height="100" backgroundColor="#FF010101">
+            <button x="0" y="0" height="100" width="50" onClick="ListBack('6332151776837369856',-1)" activeBackgroundColor="#FF010101" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF404040" activeIcoColor="#FFCCCCCC" />
+            <textView id="title" x="100" y="0" height="100" width="280" alignment="Center" font="large" textColor="#FF404040" text="SONOS" />
+        </header>
+        <overlay width="480" height="100" x="0" y="570" backgroundColor="#FFFEFEFE" onClick="ChangeScreen('6332151984648355840_player','OVERLAY_UP')">
+            <image contentId="[[6332151984648355840_cover_small]]" placeholder="sonos-placeholder-small.png" x="20" y="10" />
+            <textView text="[[6332151984648355840_title]]" font="normal" alignment="Left" x="120" y="10" width="260" height="80" backgroundColor="#FFFEFEFE" textColor="#FF010101" />
+            <switch y="25" x="410" width="50" height="60" icoFont="symbol" offIcoChar="#e036" onIcoChar="#e037" icoColor="#FF010101" onClick="TriggerAction('a')" state="[[6332151984648355840_playing]]" />
+        </overlay>
+    </screen>
+
+    <screen type="Custom" id="6332151984648355840_player" onSlideToDown="ChangeScreen('6332151984648355840','MIN_OVERLAY_UP')">
+        <key id="MUTE" onPress="TriggerAction('2')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1-','SONOS','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" />
+        <key id="RIGHT" />
+        <key id="UP" />
+        <key id="DOWN" />
+        <key id="VOLUP" onPress="TriggerAction('3')" onLongPressRepeat="TriggerAction('4')" />
+        <key id="VOLDOWN" onPress="TriggerAction('5')" onLongPressRepeat="TriggerAction('6')" />
+        <key id="CHUP" onPress="TriggerAction('7')" />
+        <key id="CHDOWN" onPress="TriggerAction('8')" />
+        <key id="BACK" onPress="ListBack('0',-1)" />
+        <key id="OK" onPress="TriggerAction('9')" />
+        <key id="MENU" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)"/>
+        <key id="BACK" onPress="ChangeScreen('6332151984648355840','MIN_OVERLAY_UP')"/>
+        <button onClick="ChangeScreen('6332151984648355840','MIN_OVERLAY_UP')" width="480" height="70" icoChar="#e089" icoColor="#FF010101" icoFont="symbol" backgroundColor="#FFFEFEFE" />
+        <image x="0" y="70" contentId="[[6332151984648355840_cover]]" placeholder="sonos-placeholder-big.jpg" width="480" height="480" />
+        <screen type="Custom" x="0" y="550" width="480" height="220" backgroundColor="#FFFEFEFE">
+            <textView text="[[6332151984648355840_title]]" font="largelight" alignment="Center" x="5" y="40" width="470" height="34" backgroundColor="#FFFEFEFE" textColor="#FF010101" />
+            <textView text="[[6332151984648355840_artist]]" font="normal" alignment="Center" x="5" y="90" width="470" height="25" backgroundColor="#FFFEFEFE" textColor="#FF010101" />
+            <button onClick="TriggerAction('8')" y="120" x="80" width="100" height="100" backgroundColor="#FFFEFEFE" frameColor="#00000000" icoFont="symbol" icoChar="#e03b" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+            <switch onClick="TriggerAction('a')" y="120" x="180" width="120" height="100" backgroundColor="#FFFEFEFE" frameColor="#00000000" icoFont="symbol" offIcoChar="#e036" onIcoChar="#e037" icoColor="#FF010101" state="[[6332151984648355840_playing]]"/>
+            <button onClick="TriggerAction('7')" y="120" x="300" width="100" height="100" backgroundColor="#FFFEFEFE" frameColor="#00000000" icoFont="symbol" icoChar="#e039" icoColor="#FF010101" activeIcoColor="#FF404040"/>
+            <button onClick="ChangeScreen('6332151984648355840_queue', 'OVERLAY_UP')" y="120" x="410" width="55" height="100" backgroundColor="#FFFEFEFE" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e086" icoColor="#FF010101" />
+        </screen>
+    </screen>
+
+    <screen type="FastList" slideTolerance="strict" id="6332151984648355840_queue" onLoad="BrowseDirectory('&#x2F;projects&#x2F;home&#x2F;tr2&#x2F;directory&#x2F;6332151969934737408&#x2F;browse', 'eyJkaXJlY3RvcnlVcmwiOiIvcHJvamVjdHMvaG9tZS90cjIvZGlyZWN0b3J5LzYzMzIxNTE5Njk5MzQ3Mzc0MDgvYnJvd3NlIiwiYnJvd3NlVXJpIjoiIiwidGl0bGUiOiJTT05PUyIsImhpc3RvcnkiOltdfQ==', 'RELOAD')" onPullDown="ReloadList()" isMarkedItemCallback="IsActiveQueueItem('6332151984648355840_playing', '6332151984648355840_title','6332151984648355840_artist')" overscrollIcon="#e069" overscrollIconFont="symbol" overscrollIconColor="0xFFDBDBDB" height="670" splitLineColor="#FFEDEDED" overscrollEnabled="true" overscrollColor="#FF010101" overscrollBottomColor="#FFD3D3D3" overscrollHeight="100" loadingImage="loading" backgroundColor="#FF010101">
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)"/>
+        <key id="BACK" onPress="ChangeScreen('6332151984648355840_player','MIN_OVERLAY_UP')"/>
+        <header height="100" backgroundColor="#FF010101">
+            <textView x="100" y="0" height="100" width="280" alignment="Center" font="large" textColor="#FF404040" text="QUEUE" />
+            <button onClick="ChangeScreen('6332151984648355840_player','MIN_OVERLAY_UP')" x="405" y="0" height="100" width="55" icoFont="smallsymbol" icoChar="#e08c" icoColor="#FF404040" activeIcoColor="#FFCCCCCC" activeBackgroundColor="#FF010101" />
+        </header>
+    </screen>
+
+    <!-- RECIPE MEDIAPLAYER -->
+    <screen type="Custom" id="6482149846550577152" collection="1&#x2F;2" onSlideToLeft="ChangeScreen(&#39;6482149846550577152-100&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6482149846550577152-100&#39;,1)">
+        <key id="MUTE" onPress="TriggerAction('b')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1_','MOVIES &amp; MEDIA','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" onPress="TriggerAction('c')" onLongPressRepeat="TriggerAction('d')" />
+        <key id="RIGHT" onPress="TriggerAction('e')" onLongPressRepeat="TriggerAction('f')" />
+        <key id="UP" onPress="TriggerAction('g')" onLongPressRepeat="TriggerAction('h')" />
+        <key id="DOWN" onPress="TriggerAction('i')" onLongPressRepeat="TriggerAction('j')" />
+        <key id="VOLUP" onPress="TriggerAction('k')" onLongPressRepeat="TriggerAction('l')" />
+        <key id="VOLDOWN" onPress="TriggerAction('m')" onLongPressRepeat="TriggerAction('n')" />
+        <key id="CHUP" onPress="TriggerAction('o')" />
+        <key id="CHDOWN" onPress="TriggerAction('p')" />
+        <key id="BACK" onPress="TriggerAction('q')" onLongPressRepeat="TriggerAction('r')" />
+        <key id="OK" onRelease="TriggerAction('s')" onLongPressRepeat="TriggerAction('t')" />
+        <key id="MENU" onRelease="TriggerAction('u')" onLongPressRepeat="TriggerAction('v')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="MOVIES &amp; MEDIA"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6332151776837369856',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Custom" frameColor="#00000000" x="0" y="10" width="480" height="130">
+            <button onClick="TriggerAction('w')" y="0" x="45" width="195" height="130" activeTextColor="#FF404040" frameColor="#00000000" textColor="#FF010101" font="normal" text="SUBTITLE" />
+        </screen>
+        <screen type="Custom" frameColor="#00000000" x="0" y="140" width="480" height="130">
+            <button onClick="TriggerAction('x')" y="0" x="45" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e036" icoColor="#FF010101" activeIcoColor="#FF404040" />
+            <button onClick="TriggerAction('y')" y="0" x="175" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e037" icoColor="#FF010101" activeIcoColor="#FF404040" />
+            <button onClick="TriggerAction('z')" y="0" x="305" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e038" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </screen>
+        <screen type="Custom" frameColor="#00000000" x="0" y="270" width="480" height="130">
+            <button onClick="TriggerAction('p')" y="0" x="45" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e03e" icoColor="#FF010101" activeIcoColor="#FF404040" />
+            <button onClick="TriggerAction('o')" y="0" x="305" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e03a" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </screen>
+        <screen type="Custom" frameColor="#00000000" x="0" y="400" width="480" height="130">
+            <button onClick="TriggerAction('-')" y="0" x="45" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e03b" icoColor="#FF010101" activeIcoColor="#FF404040" />
+            <button onClick="TriggerAction('_')" y="0" x="305" width="130" height="130" frameColor="#00000000" icoFont="symbol" icoChar="#e039" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </screen>
+        <screen type="Custom" frameColor="#00000000" x="0" y="530" width="480" height="130">
+            <button onClick="TriggerAction('.')" y="0" x="145" width="195" height="130" activeTextColor="#FF404040" frameColor="#00000000" textColor="#FF010101" font="normal" text="OPEN/CLOSE" />
+        </screen>
+    </screen>
+
+    <screen type="Custom" id="6482149846550577152-100" collection="2&#x2F;2" onSlideToLeft="ChangeScreen(&#39;6482149846550577152&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6482149846550577152&#39;,1)">
+        <key id="MUTE" onPress="TriggerAction('b')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1_','MOVIES &amp; MEDIA','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" onPress="TriggerAction('c')" onLongPressRepeat="TriggerAction('d')" />
+        <key id="RIGHT" onPress="TriggerAction('e')" onLongPressRepeat="TriggerAction('f')" />
+        <key id="UP" onPress="TriggerAction('g')" onLongPressRepeat="TriggerAction('h')" />
+        <key id="DOWN" onPress="TriggerAction('i')" onLongPressRepeat="TriggerAction('j')" />
+        <key id="VOLUP" onPress="TriggerAction('k')" onLongPressRepeat="TriggerAction('l')" />
+        <key id="VOLDOWN" onPress="TriggerAction('m')" onLongPressRepeat="TriggerAction('n')" />
+        <key id="CHUP" onPress="TriggerAction('o')" />
+        <key id="CHDOWN" onPress="TriggerAction('p')" />
+        <key id="BACK" onPress="TriggerAction('q')" onLongPressRepeat="TriggerAction('r')" />
+        <key id="OK" onRelease="TriggerAction('s')" onLongPressRepeat="TriggerAction('t')" />
+        <key id="MENU" onRelease="TriggerAction('u')" onLongPressRepeat="TriggerAction('v')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="MOVIES &amp; MEDIA"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6332151776837369856',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Custom" textColor="#FF010101" x="0" y="10" width="480" height="650">
+            <textView x="10" y="230" height="60" width="460" alignment="Center" font="normal" text="SHORTCUTS CAN BE ADDED TO THIS SCREEN FROM THE NEEO MOBILE APP"/>
+        </screen>
+    </screen>
+
+    <!-- RECIPE TV -->
+    <screen type="Custom" id="6482150031175450624" collection="1&#x2F;3" onSlideToLeft="ChangeScreen(&#39;6482150031175450624-101&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6482150031175450624-100&#39;,1)">
+        <key id="MUTE" onPress="TriggerAction('~')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1.','TV','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" onPress="TriggerAction('10')" onLongPressRepeat="TriggerAction('11')" />
+        <key id="RIGHT" onPress="TriggerAction('12')" onLongPressRepeat="TriggerAction('13')" />
+        <key id="UP" onPress="TriggerAction('14')" onLongPressRepeat="TriggerAction('15')" />
+        <key id="DOWN" onPress="TriggerAction('16')" onLongPressRepeat="TriggerAction('17')" />
+        <key id="VOLUP" onPress="TriggerAction('18')" onLongPressRepeat="TriggerAction('19')" />
+        <key id="VOLDOWN" onPress="TriggerAction('1a')" onLongPressRepeat="TriggerAction('1b')" />
+        <key id="CHUP" onPress="TriggerAction('1c')" onLongPressRepeat="TriggerAction('1c')" />
+        <key id="CHDOWN" onPress="TriggerAction('1d')" onLongPressRepeat="TriggerAction('1d')" />
+        <key id="BACK" onRelease="TriggerAction('1e')" onLongPress="TriggerAction('1f')" />
+        <key id="OK" onPress="TriggerAction('1g')" />
+        <key id="MENU" onPress="TriggerAction('1h')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="TV"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6332151776837369856',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Custom" textColor="#FF010101" x="0" y="35" width="480" height="600">
+            <textView x="10" y="205" height="60" width="460" alignment="Center" font="normal" text="FAVORITES CAN BE ADDED TO THIS SCREEN FROM THE NEEO MOBILE APP" />
+        </screen>
+    </screen>
+
+    <screen type="Custom" id="6482150031175450624-100" collection="2&#x2F;3" onSlideToLeft="ChangeScreen(&#39;6482150031175450624&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6482150031175450624-101&#39;,1)">
+        <key id="MUTE" onPress="TriggerAction('~')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1.','TV','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" onPress="TriggerAction('10')" onLongPressRepeat="TriggerAction('11')" />
+        <key id="RIGHT" onPress="TriggerAction('12')" onLongPressRepeat="TriggerAction('13')" />
+        <key id="UP" onPress="TriggerAction('14')" onLongPressRepeat="TriggerAction('15')" />
+        <key id="DOWN" onPress="TriggerAction('16')" onLongPressRepeat="TriggerAction('17')" />
+        <key id="VOLUP" onPress="TriggerAction('18')" onLongPressRepeat="TriggerAction('19')" />
+        <key id="VOLDOWN" onPress="TriggerAction('1a')" onLongPressRepeat="TriggerAction('1b')" />
+        <key id="CHUP" onPress="TriggerAction('1c')" onLongPressRepeat="TriggerAction('1c')" />
+        <key id="CHDOWN" onPress="TriggerAction('1d')" onLongPressRepeat="TriggerAction('1d')" />
+        <key id="BACK" onRelease="TriggerAction('1e')" onLongPress="TriggerAction('1f')" />
+        <key id="OK" onPress="TriggerAction('1g')" />
+        <key id="MENU" onPress="TriggerAction('1h')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="TV"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6332151776837369856',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Grid" backgroundColor="#00000000" x="0" y="70" width="480" height="130" elementWidth="80" elementHeight="80" verticalOffset="0">
+            <row>
+                <button onClick="TriggerAction('1i')" width="80" height="80" icoFont="symbol" icoChar="#e05f" icoColor="#fff53d3d" activeIcoColor="#7ff53d3d"/>
+                <button onClick="TriggerAction('1j')" width="80" height="80" icoFont="symbol" icoChar="#e05f" icoColor="#ff09aa09" activeIcoColor="#7f09aa09"/>
+                <button onClick="TriggerAction('1k')" width="80" height="80" icoFont="symbol" icoChar="#e05f" icoColor="#fff5f53d" activeIcoColor="#7ff5f53d"/>
+                <button onClick="TriggerAction('1l')" width="80" height="80" icoFont="symbol" icoChar="#e05f" icoColor="#ff3d3df5" activeIcoColor="#7f3d3df5"/>
+            </row>
+        </screen>
+        <screen type="Grid" x="0" y="200" width="480" height="400" elementWidth="100" elementHeight="100" verticalOffset="0">
+            <row>
+                <button onClick="TriggerAction('1m')" width="100" height="50" text="1" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1n')" width="100" height="50" text="2" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1o')" width="100" height="50" text="3" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+            </row>
+            <row>
+                <button onClick="TriggerAction('1p')" width="100" height="50" text="4" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1q')" width="100" height="50" text="5" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1r')" width="100" height="50" text="6" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+            </row>
+            <row>
+                <button onClick="TriggerAction('1s')" width="100" height="50" text="7" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1t')" width="100" height="50" text="8" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1u')" width="100" height="50" text="9" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+            </row>
+            <row>
+                <button width="100" height="50" />
+                <button onClick="TriggerAction('1v')" width="100" height="50" text="0" textColor="#FF010101" activeTextColor="#FF404040" font="xlargelight" />
+                <button onClick="TriggerAction('1w')" width="100" height="50" text="INFO" textColor="#FF010101" activeTextColor="#FF404040" font="normal" />
+            </row>
+        </screen>
+    </screen>
+
+    <screen type="Custom" id="6482150031175450624-101" collection="3&#x2F;3" onSlideToLeft="ChangeScreen(&#39;6482150031175450624-100&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6482150031175450624&#39;,1)">
+        <key id="MUTE" onPress="TriggerAction('~')" />
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onRelease="ActivateScenario('6332151776837369856','1.','TV','end')" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <key id="LEFT" onPress="TriggerAction('10')" onLongPressRepeat="TriggerAction('11')" />
+        <key id="RIGHT" onPress="TriggerAction('12')" onLongPressRepeat="TriggerAction('13')" />
+        <key id="UP" onPress="TriggerAction('14')" onLongPressRepeat="TriggerAction('15')" />
+        <key id="DOWN" onPress="TriggerAction('16')" onLongPressRepeat="TriggerAction('17')" />
+        <key id="VOLUP" onPress="TriggerAction('18')" onLongPressRepeat="TriggerAction('19')" />
+        <key id="VOLDOWN" onPress="TriggerAction('1a')" onLongPressRepeat="TriggerAction('1b')" />
+        <key id="CHUP" onPress="TriggerAction('1c')" onLongPressRepeat="TriggerAction('1c')" />
+        <key id="CHDOWN" onPress="TriggerAction('1d')" onLongPressRepeat="TriggerAction('1d')" />
+        <key id="BACK" onRelease="TriggerAction('1e')" onLongPress="TriggerAction('1f')" />
+        <key id="OK" onPress="TriggerAction('1g')" />
+        <key id="MENU" onPress="TriggerAction('1h')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="TV"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6332151776837369856',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Custom" textColor="#FF010101" x="0" y="10" width="480" height="650">
+            <textView x="10" y="230" height="60" width="460" alignment="Center" font="normal" text="SHORTCUTS CAN BE ADDED TO THIS SCREEN FROM THE NEEO MOBILE APP"/>
+        </screen>
+    </screen>
+
+    <screen type="FastList" slideTolerance="strict" id="6332151969934737408" onLoad="BrowseDirectory('&#x2F;projects&#x2F;home&#x2F;tr2&#x2F;directory&#x2F;6332151969934737408&#x2F;browse', 'eyJicm93c2VJZGVudGlmaWVyIjoiIn0=', 'RELOAD')" onPullDown="ReloadList()" splitLineColor="#FFEDEDED" height="670" overscrollEnabled="true" overscrollIcon="#e069" overscrollIconFont="symbol" overscrollIconColor="0xFFDBDBDB" overscrollColor="#FF010101" overscrollBottomColor="#FF010101" overscrollHeight="100" loadingImage="loading" backgroundColor="#FF010101">
+        <key id="BACK" onPress="ListBack('6332151969934737408', -1)"/>
+        <header height="100" backgroundColor="#FF010101">
+            <button x="0" y="0" height="100" width="50" onClick="ListBack('6332151969934737408', -1)" activeBackgroundColor="#FF010101" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF404040" activeIcoColor="#FF404040" />
+            <textView x="100" y="0" height="100" width="280" alignment="Center" font="large" textColor="#FF404040" text="Sonos Queue" />
+        </header>
+    </screen>
+
+    <screen type="FastList" slideTolerance="strict" id="6332151969951514624" onLoad="BrowseDirectory('&#x2F;projects&#x2F;home&#x2F;tr2&#x2F;directory&#x2F;6332151969951514624&#x2F;browse', 'eyJicm93c2VJZGVudGlmaWVyIjoiIn0=', 'RELOAD')" onPullDown="ReloadList()" splitLineColor="#FFEDEDED" height="670" overscrollEnabled="true" overscrollIcon="#e069" overscrollIconFont="symbol" overscrollIconColor="0xFFDBDBDB" overscrollColor="#FF010101" overscrollBottomColor="#FF010101" overscrollHeight="100" loadingImage="loading" backgroundColor="#FF010101">
+        <key id="BACK" onPress="ListBack('6332151969951514624', -1)"/>
+        <header height="100" backgroundColor="#FF010101">
+            <button x="0" y="0" height="100" width="50" onClick="ListBack('6332151969951514624', -1)" activeBackgroundColor="#FF010101" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF404040" activeIcoColor="#FF404040" />
+            <textView x="100" y="0" height="100" width="280" alignment="Center" font="large" textColor="#FF404040" text="Spotify" />
+        </header>
+    </screen>
+
+    <screen type="FastList" slideTolerance="strict" id="6332151969964097536" onLoad="BrowseDirectory('&#x2F;projects&#x2F;home&#x2F;tr2&#x2F;directory&#x2F;6332151969964097536&#x2F;browse', 'eyJicm93c2VJZGVudGlmaWVyIjoiIn0=', 'RELOAD')" onPullDown="ReloadList()" splitLineColor="#FFEDEDED" height="670" overscrollEnabled="true" overscrollIcon="#e069" overscrollIconFont="symbol" overscrollIconColor="0xFFDBDBDB" overscrollColor="#FF010101" overscrollBottomColor="#FF010101" overscrollHeight="100" loadingImage="loading" backgroundColor="#FF010101">
+        <key id="BACK" onPress="ListBack('6332151969964097536', -1)"/>
+        <header height="100" backgroundColor="#FF010101">
+            <button x="0" y="0" height="100" width="50" onClick="ListBack('6332151969964097536', -1)" activeBackgroundColor="#FF010101" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF404040" activeIcoColor="#FF404040" />
+            <textView x="100" y="0" height="100" width="280" alignment="Center" font="large" textColor="#FF404040" text="Sonos Directory" />
+        </header>
+    </screen>
+
+    <!-- RECIPE LIGHT -->
+    <screen type="Custom" id="6422449637243748352" collection="1&#x2F;2" onSlideToLeft="ChangeScreen(&#39;6422449637243748352-100&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6422449637243748352-100&#39;,1)">
+        <key id="HOME" onPress="ChangeScreen('6332151776837369856',-1)" />
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="LIGHT"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6276874613926395904',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Custom" x="0" y="185" width="480" height="150">
+            <switch state="[[6422449512589033472]]" image="switch.png" onValueChange="TriggerAction('83')" x="15.5" y="0" width="100" height="45" frameColor="#00000000"/>
+            <scrollBar value="[[6422449512580644865]]" minValue="0" maxValue="255" image="slider.png" onValueChange="TriggerAction('84')" x="115.5" y="16" width="349" height="4" barColor="#FF010101" inactiveBarColor="#FF333333" />
+            <textView text="DIMMER" x="0" y="63" height="21" width="480" alignment="Center" font="small" textColor="#FF010101" />
+            <textView text="BUITEN SCHUUR" x="0" y="84" height="21" width="480" alignment="Center" font="small" textColor="#FF010101" />
+        </screen>
+        <screen type="Custom" x="0" y="335" width="480" height="150">
+            <switch state="[[6427436980048494592]]" image="switch.png" onValueChange="TriggerAction('85')" x="204.5" y="14" width="71" height="45" frameColor="#00000000"/>
+            <textView text="LIGHT" x="0" y="77" height="21" width="480" alignment="Center" font="small" textColor="#FF010101" />
+            <textView text="BUITEN PAALTJES" x="0" y="98" height="21" width="480" alignment="Center" font="small" textColor="#FF010101" />
+        </screen>
+    </screen>
+    <screen type="Custom" id="6422449637243748352-100" collection="2&#x2F;2" onSlideToLeft="ChangeScreen(&#39;6422449637243748352&#39;,-1)" onSlideToRight="ChangeScreen(&#39;6422449637243748352&#39;,1)">
+        <key id="HOME" onPress="ChangeScreen('6276874613926395904',-1)" />
+        <key id="POWER" onLongPress="ShowPopup('PowerOffConfirm')" />
+        <header height="70">
+            <textView x="100" y="0" height="70" width="280" alignment="Center" font="normal" textColor="#FF010101" text="LIGHT"/>
+            <button x="0" y="0" height="70" width="100" onClick="ChangeScreen('6276874613926395904',-1)" frameColor="#00000000" icoFont="smallsymbol" icoChar="#e034" icoColor="#FF010101" activeIcoColor="#FF404040" />
+        </header>
+        <screen type="Custom" textColor="#FF010101" x="0" y="10" width="480" height="650">
+            <textView x="10" y="230" height="60" width="460" alignment="Center" font="normal" text="SHORTCUTS CAN BE ADDED TO THIS SCREEN FROM THE NEEO MOBILE APP"/>
+        </screen>
+    </screen>
+</doc>
